@@ -19,7 +19,6 @@ public class Cliente {
     private ArrayList<Placa> placas = new ArrayList();
     private ArrayList<Aparato> aparatos = new ArrayList();
 
-
     public Cliente(String nif, String nom, double mm) {
         this.nif = nif;
         this.nom = nom;
@@ -40,13 +39,29 @@ public class Cliente {
     }
 
     public int onCasa() {
-        if(interruptor != true){
+        if (interruptor != true) {
             interruptor = true;
             return 2;
-        }else{
+        } else {
             return 1;
         }
-            
+
+    }
+
+    public int onAparell(String descripcion) {
+        for (Aparato aparato : aparatos) {
+            if (descripcion == aparato.getDescripcion()) {
+                if(aparato.getInterruptor()== true){
+                    return 7;
+                }else{
+                    aparato.changeOn();
+                    return 8;
+                }
+            }else{
+                return 6;
+            }
+        }
+        return 0;
     }
 
 }

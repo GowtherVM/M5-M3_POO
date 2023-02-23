@@ -16,14 +16,15 @@ import java.util.List;
 public class M03MOOEspinosaP {
 
     static ArrayList<Cliente> clientes = new ArrayList();
-    static ArrayList <String> mensajescasa = new ArrayList();
-    
+    static ArrayList<String> mensajescasa = new ArrayList();
 
     public static void main(String[] args) throws IOException {
         BufferedReader inputConsola = new BufferedReader(new InputStreamReader(System.in));
-        
-        // errorcasa.add("ERROR: La casa ja té l'interruptor encès.","OK: Interruptor general activat.");
-        mensajescasa.addAll(List.of("ERROR: La casa ja té l'interruptor encès.","OK: Interruptor general activat."));
+
+        mensajescasa.addAll(List.of("ERROR: La casa ja té l'interruptor encès.", "OK: Interruptor general activat.", "OK: Casa registrada.", "OK: Placa afegida a la casa.",
+                "OK: Aparell afegit a la casa.", "ERROR: No hi ha cap aparell registrat amb aquesta descripció a la casa indicada.", "ERROR: L'aparell ja està encès.",
+                 "OK: Aparell encès."));
+
         String comando;
         String nif;
         String nom;
@@ -44,6 +45,7 @@ public class M03MOOEspinosaP {
 
                     Cliente nuevacasa = new Cliente(partes[1], partes[2], Double.parseDouble(partes[3]));
                     clientes.add(nuevacasa);
+                    System.out.println(mensajescasa.get(3));
                     break;
 
                 case "addPlaca":
@@ -57,6 +59,7 @@ public class M03MOOEspinosaP {
 
                     buscado = buscarcasa(nif);
                     buscado.addPlaca(nuevo2);
+                    System.out.println(mensajescasa.get(4));
                     break;
 
                 case "addAparell":
@@ -67,6 +70,7 @@ public class M03MOOEspinosaP {
                     Aparato nuevo3 = new Aparato(descripcion, gasto);
                     buscado = buscarcasa(nif);
                     buscado.addAparato(nuevo3);
+                    System.out.println(mensajescasa.get(5));
                     break;
 
                 case "onCasa":
@@ -74,7 +78,12 @@ public class M03MOOEspinosaP {
                     opcion = buscado.onCasa();
                     System.out.println(mensajescasa.get(opcion));
                     break;
+                case "onAparell":
 
+                    buscado = buscarcasa(partes[1]);
+                    opcion = buscado.onAparell(partes[2]);
+                    System.out.println(mensajescasa.get(opcion));
+                    break;
             }
 
         } while (!comando.equalsIgnoreCase("quit"));

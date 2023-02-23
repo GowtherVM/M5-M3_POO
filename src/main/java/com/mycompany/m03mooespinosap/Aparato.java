@@ -9,13 +9,22 @@ package com.mycompany.m03mooespinosap;
  * @author Admin
  */
 public class Aparato {
+
     private String descripcion;
     private float gasto;
     private boolean interruptor = true;
-    
-    public Aparato(String descripcion, float gasto){
+
+    public Aparato(String descripcion, float gasto) {
         this.descripcion = descripcion;
         this.gasto = gasto;
     }
-    
+    public String getDescripcion(){
+        return this.descripcion;
+    }
+    public boolean getInterruptor() {
+        return this.interruptor;
+    }
+    public void changeOn(){
+        this.interruptor = false;
+    }
 }
