@@ -51,13 +51,29 @@ public class Cliente {
     public int onAparell(String descripcion) {
         for (Aparato aparato : aparatos) {
             if (descripcion == aparato.getDescripcion()) {
-                if(aparato.getInterruptor()== true){
+                if (aparato.getInterruptor() == true) {
                     return 7;
-                }else{
+                } else {
                     aparato.changeOn();
                     return 8;
                 }
-            }else{
+            } else {
+                return 6;
+            }
+        }
+        return 0;
+    }
+
+    public int offAparell(String descripcion) {
+        for (Aparato aparato : aparatos) {
+            if (descripcion == aparato.getDescripcion()) {
+                if (aparato.getInterruptor() == false) {
+                    return 9;
+                } else {
+                    aparato.changeOff();
+                    return 10;
+                }
+            } else {
                 return 6;
             }
         }

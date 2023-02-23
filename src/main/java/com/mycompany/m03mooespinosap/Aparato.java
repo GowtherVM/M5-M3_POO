@@ -25,6 +25,9 @@ public class Aparato {
         return this.interruptor;
     }
     public void changeOn(){
+        this.interruptor = true;
+    }
+    public void changeOff(){
         this.interruptor = false;
     }
 }

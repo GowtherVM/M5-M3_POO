@@ -82,6 +82,16 @@ public class M03MOOEspinosaP {
 
                     buscado = buscarcasa(partes[1]);
                     opcion = buscado.onAparell(partes[2]);
+                   if(opcion != 0){
+                    System.out.println(mensajescasa.get(opcion));} 
+                   else{
+                       System.out.println("ERROR: 666");
+                   }
+                    break;
+                    
+                case "offAparell":
+                    buscado = buscarcasa(partes[1]);
+                    opcion = buscado.offAparell(partes[2]);
                     System.out.println(mensajescasa.get(opcion));
                     break;
             }
