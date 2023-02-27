@@ -11,7 +11,7 @@ package com.mycompany.m03mooespinosap;
 public class Aparato {
 
     private String descripcion;
-    private float gasto;
+    private double gasto;
     private boolean interruptor = true;
 
     public Aparato(String descripcion, float gasto) {
@@ -23,6 +23,9 @@ public class Aparato {
     }
     public boolean getInterruptor() {
         return this.interruptor;
+    }
+    public double getGasto(){
+        return this.gasto;
     }
     public void changeOn(){
         this.interruptor = true;

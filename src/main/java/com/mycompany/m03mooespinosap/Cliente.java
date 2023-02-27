@@ -79,7 +79,7 @@ public class Cliente {
         for (Aparato aparato : aparatos) {
             if (descripcion.equalsIgnoreCase(aparato.getDescripcion())) {
                 if (aparato.getInterruptor() == false) {
-                   condicion.getError(25);
+                    condicion.getError(25);
                 } else {
                     aparato.changeOff();
                     condicion.getCorrecto(4);
@@ -88,6 +88,53 @@ public class Cliente {
                 condicion.getError(24);
             }
         }
+    }
+
+    public void getList() {
+        double resta;
+        String estado;
+
+        resta = this.mm;
+        for (Placa laplaca : placas) {
+            resta = resta - laplaca.getSuperficie();
+        }
+        if (this.interruptor == true) {
+            estado = "encès";
+        } else {
+            estado = "apagat";
+        }
+
+        System.out.println("Cliente: " + this.nif + " - " + this.nom);
+        System.out.println("Superficie de teulada: " + this.mm);
+        System.out.println("Superficie disponible: " + resta);
+        System.out.println("Interruptor general: " + estado);
+        System.out.println("Plaques solars instal·lades: " + placas.size());
+        System.out.println("Aparells registrats: " + aparatos.size());
+    }
+
+    public void getInfo() {
+        double potenciatotal = 0;
+        double preciototal = 0;
+        double consum = 0;
+
+        for (Placa laplaca : placas) {
+            potenciatotal = potenciatotal + laplaca.getPotencia();
+        }
+
+        for (Placa laplaca : placas) {
+           preciototal = preciototal + laplaca.getPrecio();
+        }
+        
+        for(Aparato elaparato: aparatos){
+            consum = consum + elaparato.getGasto();
+        }
+
+        System.out.println("Cliente: " + this.nif + " - " + this.nom);
+        System.out.println("Plaques solars instal·lades: " + placas.size());
+        System.out.println("Potencia total: " + potenciatotal);
+        System.out.println("Inversió total: " + preciototal);
+        System.out.println("Aparells registrats: "+ aparatos.size());
+        System.out.println("Consum actual: "+ consum + "\n");
     }
 
 }

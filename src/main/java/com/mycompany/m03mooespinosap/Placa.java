@@ -9,17 +9,27 @@ package com.mycompany.m03mooespinosap;
  * @author Admin
  */
 public class Placa {
-    
+
     private float superficie;
     private float precio;
     private float potencia;
-    
-    public Placa(float superficie, float precio, float potencia){
+
+    public Placa(float superficie, float precio, float potencia) {
         this.superficie = superficie;
         this.precio = precio;
         this.potencia = potencia;
     }
-    
-    
-    
+
+    public double getSuperficie() {
+        return this.superficie;
+    }
+
+    public double getPotencia() {
+        return this.potencia;
+    }
+
+    public double getPrecio() {
+        return this.precio;
+    }
+
 }
