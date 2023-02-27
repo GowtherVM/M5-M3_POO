@@ -38,6 +38,14 @@ public class Cliente {
         return this.nif;
     }
 
+    public String getNom() {
+        return this.nom;
+    }
+
+    public double getMm() {
+        return this.mm;
+    }
+
     public int onCasa() {
         if (interruptor != true) {
             interruptor = true;
@@ -48,36 +56,38 @@ public class Cliente {
 
     }
 
-    public int onAparell(String descripcion) {
+    public void onAparell(String descripcion, Condiciones condicion) {
+
         for (Aparato aparato : aparatos) {
-            if (descripcion == aparato.getDescripcion()) {
+            if (descripcion.equalsIgnoreCase(aparato.getDescripcion())) {
                 if (aparato.getInterruptor() == true) {
-                    return 7;
+
+                    condicion.getError(19);
+
                 } else {
                     aparato.changeOn();
-                    return 8;
+                    condicion.getCorrecto(3);
                 }
             } else {
-                return 6;
+                condicion.getError(24);
             }
         }
-        return 0;
+
     }
 
-    public int offAparell(String descripcion) {
+    public void offAparell(String descripcion, Condiciones condicion) {
         for (Aparato aparato : aparatos) {
-            if (descripcion == aparato.getDescripcion()) {
+            if (descripcion.equalsIgnoreCase(aparato.getDescripcion())) {
                 if (aparato.getInterruptor() == false) {
-                    return 9;
+                   condicion.getError(25);
                 } else {
                     aparato.changeOff();
-                    return 10;
+                    condicion.getCorrecto(4);
                 }
             } else {
-                return 6;
+                condicion.getError(24);
             }
         }
-        return 0;
     }
 
 }
