@@ -14,7 +14,7 @@ public class Cliente {
 
     private String nif;
     private String nom;
-    private double mm;
+    private double m2;
     private boolean interruptor = true;
     private ArrayList<Placa> placas = new ArrayList();
     private ArrayList<Aparato> aparatos = new ArrayList();
@@ -22,7 +22,7 @@ public class Cliente {
     public Cliente(String nif, String nom, double mm) {
         this.nif = nif;
         this.nom = nom;
-        this.mm = mm;
+        this.m2 = mm;
     }
 
     public void addPlaca(Placa nuevaplaca) {
@@ -43,50 +43,65 @@ public class Cliente {
     }
 
     public double getMm() {
-        return this.mm;
+        return this.m2;
     }
 
-    public int onCasa() {
+    public void onCasa() {
         if (interruptor != true) {
             interruptor = true;
-            return 2;
+            System.out.println("OK: Interruptor general activat.");
         } else {
-            return 1;
+            System.out.println(Condiciones.CASA_ENCESA);
         }
-
     }
+    
 
     public void onAparell(String descripcion, Condiciones condicion) {
-
-        for (Aparato aparato : aparatos) {
-            if (descripcion.equalsIgnoreCase(aparato.getDescripcion())) {
-                if (aparato.getInterruptor() == true) {
-
-                    condicion.getError(19);
-
-                } else {
-                    aparato.changeOn();
-                    condicion.getCorrecto(3);
-                }
-            } else {
-                condicion.getError(24);
+        int indice = 0;
+        for (Aparato existencia : aparatos) {
+            if (!(existencia.getDescripcion()).equalsIgnoreCase(descripcion)) {
+                indice++;
             }
         }
 
+        if (indice < aparatos.size()) {
+            for (Aparato aparato : aparatos) {
+                if (descripcion.equalsIgnoreCase(aparato.getDescripcion())) {
+                    if (aparato.getInterruptor() == true) {
+
+                        System.out.println(Condiciones.APARELL_ENCES);
+
+                    } else {
+                        aparato.changeOn();
+                        System.out.println("OK: Aparell encès.");
+                    }
+                }
+            }
+        } else {
+            System.out.println(Condiciones.APARELL_NOREGISTRAT);
+        }
     }
 
     public void offAparell(String descripcion, Condiciones condicion) {
-        for (Aparato aparato : aparatos) {
-            if (descripcion.equalsIgnoreCase(aparato.getDescripcion())) {
-                if (aparato.getInterruptor() == false) {
-                    condicion.getError(25);
-                } else {
-                    aparato.changeOff();
-                    condicion.getCorrecto(4);
-                }
-            } else {
-                condicion.getError(24);
+        int indice = 0;
+        for (Aparato existencia : aparatos) {
+            if (!(existencia.getDescripcion()).equalsIgnoreCase(descripcion)) {
+                indice++;
             }
+        }
+        if (indice < aparatos.size()) {
+            for (Aparato aparato : aparatos) {
+                if (descripcion.equalsIgnoreCase(aparato.getDescripcion())) {
+                    if (aparato.getInterruptor() == false) {
+                        System.out.println(Condiciones.APARELL_APAGAT);
+                    } else {
+                        aparato.changeOff();
+                        System.out.println("OK: Aparell apagat.");
+                    }
+                }
+            }
+        } else {
+            System.out.println(Condiciones.APARELL_NOREGISTRAT);
         }
     }
 
@@ -94,7 +109,7 @@ public class Cliente {
         double resta;
         String estado;
 
-        resta = this.mm;
+        resta = this.m2;
         for (Placa laplaca : placas) {
             resta = resta - laplaca.getSuperficie();
         }
@@ -105,11 +120,21 @@ public class Cliente {
         }
 
         System.out.println("Cliente: " + this.nif + " - " + this.nom);
-        System.out.println("Superficie de teulada: " + this.mm);
+        System.out.println("Superficie de teulada: " + this.m2);
         System.out.println("Superficie disponible: " + resta);
         System.out.println("Interruptor general: " + estado);
-        System.out.println("Plaques solars instal·lades: " + placas.size());
-        System.out.println("Aparells registrats: " + aparatos.size());
+
+        if (placas.size() == 0) {
+            System.out.println("No té plaques solars instal·lades.");
+        } else {
+            System.out.println("Plaques solars instal·lades: " + placas.size());
+        }
+        if (aparatos.size() == 0) {
+            System.out.println("No té cap aparell elèctric registrat.");
+        } else {
+            System.out.println("Aparells registrats: " + aparatos.size());
+        }
+
     }
 
     public void getInfo() {
@@ -119,22 +144,29 @@ public class Cliente {
 
         for (Placa laplaca : placas) {
             potenciatotal = potenciatotal + laplaca.getPotencia();
+            preciototal = preciototal + laplaca.getPrecio();
         }
 
-        for (Placa laplaca : placas) {
-           preciototal = preciototal + laplaca.getPrecio();
-        }
-        
-        for(Aparato elaparato: aparatos){
-            consum = consum + elaparato.getGasto();
+        for (Aparato elaparato : aparatos) {
+            if (elaparato.getInterruptor() == true) {
+                consum = consum + elaparato.getGasto();
+            }
         }
 
         System.out.println("Cliente: " + this.nif + " - " + this.nom);
         System.out.println("Plaques solars instal·lades: " + placas.size());
         System.out.println("Potencia total: " + potenciatotal);
         System.out.println("Inversió total: " + preciototal);
-        System.out.println("Aparells registrats: "+ aparatos.size());
-        System.out.println("Consum actual: "+ consum + "\n");
-    }
+        System.out.println("Aparells registrats: " + aparatos.size());
+        System.out.println("Consum actual: " + consum + "\n");
 
+        if (consum > 0) {
+            System.out.println("Aparells encesos:");
+            for (Aparato elaparato : aparatos) {
+                if (elaparato.getInterruptor() == true) {
+                    System.out.println("    - " + elaparato.getDescripcion());
+                }
+            }
+        }
+    }
 }

@@ -21,102 +21,147 @@ public class M03MOOEspinosaP {
         Condiciones nuevacondicion = new Condiciones();
 
         String comando;
-        String nif;
-        String nom;
-        float mm;
-        String puntero;
         Cliente buscado;
-        int opcion;
+        int indice;
 
         do {
             System.out.print("> ");
             comando = inputConsola.readLine();
             String[] partes = comando.split(" ");
 
+            if (partes[0].equalsIgnoreCase("addCasa") || partes[0].equalsIgnoreCase("addPlaca") || partes[0].equalsIgnoreCase("addAparell") || partes[0].equalsIgnoreCase("onCasa")
+                    || partes[0].equalsIgnoreCase("onAparell") || partes[0].equalsIgnoreCase("offAparell") || partes[0].equalsIgnoreCase("list") || partes[0].equalsIgnoreCase("info")
+                    || partes[0].equalsIgnoreCase("quit")) {
 
-            switch (partes[0]) {
+                switch (partes[0]) {
 
-                case "addCasa":
+                    case "addCasa":
+                        indice = buscarExistencia(partes[1]);
 
-                    Cliente nuevacasa = new Cliente(partes[1], partes[2], Double.parseDouble(partes[3]));
-                    clientes.add(nuevacasa);
-                    nuevacondicion.getCorrecto(0);
-                    break;
+                        if (partes.length == 4) {
+                            if (indice == clientes.size()) {
+                                if (Double.parseDouble(partes[3]) > 10) {
+                                    Cliente nuevacasa = new Cliente(partes[1], partes[2], Double.parseDouble(partes[3]));
+                                    clientes.add(nuevacasa);
+                                } else {
+                                    System.out.println(Condiciones.SUPERFICIE_CASA);
+                                }
+                            } else {
+                                System.out.println(Condiciones.CASA_REGISTRADA);
+                            }
+                        } else {
+                            System.out.println(Condiciones.PARAMETRES + Condiciones.ADDCASA);
+                        }
+                        break;
 
-                case "addPlaca":
+                    case "addPlaca":
+                        indice = buscarExistencia(partes[1]);
 
-                    float superficie = Float.valueOf(partes[2]);
-                    float precio = Float.valueOf(partes[3]);
-                    float potencia = Float.valueOf(partes[4]);
+                        float superficie = Float.valueOf(partes[2]);
+                        float precio = Float.valueOf(partes[3]);
+                        float potencia = Float.valueOf(partes[4]);
 
-                    Placa nuevo2 = new Placa(superficie, precio, potencia);
+                        if (partes.length == 5) {
+                            if (indice < clientes.size()) {
+                                if (superficie > 0) {
+                                    if (precio > 0) {
+                                        if (potencia > 0) {
 
-                    buscado = buscarcasa(partes[1]);
-                    buscado.addPlaca(nuevo2);
+                                            Placa nuevo2 = new Placa(superficie, precio, potencia);
+                                            buscado = buscarCasa(partes[1]);
+                                            buscado.addPlaca(nuevo2);
 
-                    nuevacondicion.getCorrecto(1);
-                    break;
+                                        } else {
+                                            System.out.println(Condiciones.POTENCIA);
+                                        }
+                                    } else {
+                                        System.out.println(Condiciones.PREU_PLACA);
+                                    }
+                                } else {
+                                    System.out.println(Condiciones.SUPERFICIE_PLACA);
+                                }
+                            } else {
+                                System.out.println(Condiciones.CASA_NOREGISTRADA);
+                            }
+                        } else {
+                            System.out.println(Condiciones.PARAMETRES + Condiciones.ADDPLACA);
+                        }
 
-                case "addAparell":
+                        break;
 
-                    String descripcion = partes[2];
-                    float gasto = Float.valueOf(partes[3]);
+                    case "addAparell":
 
-                    Aparato nuevo3 = new Aparato(descripcion, gasto);
-                    buscado = buscarcasa(partes[1]);
-                    buscado.addAparato(nuevo3);
+                        String descripcion = partes[2];
+                        float gasto = Float.valueOf(partes[3]);
 
-                    nuevacondicion.getCorrecto(2);
-                    break;
+                        Aparato nuevo3 = new Aparato(descripcion, gasto);
+                        buscado = buscarCasa(partes[1]);
+                        buscado.addAparato(nuevo3);
 
-                case "onCasa":
-                    buscado = buscarcasa(partes[1]);
-                    opcion = buscado.onCasa();
+                        break;
 
-                    break;
-                case "onAparell":
+                    case "onCasa":
+                        buscado = buscarCasa(partes[1]);
+                        buscado.onCasa();
 
-                    buscado = buscarcasa(partes[1]);
-                    buscado.onAparell(partes[2], nuevacondicion);
+                        break;
+                    case "onAparell":
 
-                    break;
+                        buscado = buscarCasa(partes[1]);
+                        buscado.onAparell(partes[2], nuevacondicion);
 
-                case "offAparell":
-                    buscado = buscarcasa(partes[1]);
-                    buscado.offAparell(partes[2], nuevacondicion);
+                        break;
 
-                    break;
+                    case "offAparell":
+                        buscado = buscarCasa(partes[1]);
+                        buscado.offAparell(partes[2], nuevacondicion);
 
-                case "list":
-                    int indice;
-                    indice = 1;
+                        break;
 
-                    for (Cliente elcliente : clientes) {
+                    case "list":
+                        indice = 1;
 
-                        System.out.println("Casa " + indice);
-                        elcliente.getList();
-                        indice++;
-                    }
-                    break;
+                        for (Cliente elcliente : clientes) {
 
-                case "info":
-                    buscado = buscarcasa(partes[1]);
-                    buscado.getInfo();
-                    break;
+                            System.out.println("Casa " + indice);
+                            elcliente.getList();
+                            indice++;
+                        }
+                        break;
+
+                    case "info":
+                        buscado = buscarCasa(partes[1]);
+                        buscado.getInfo();
+                        break;
+                }
+
+            } else {
+                System.out.println(Condiciones.COMANDA);
             }
-
         } while (!comando.equalsIgnoreCase("quit"));
 
     }
 
-    public static Cliente buscarcasa(String NIF) {
+    public static Cliente buscarCasa(String nif) {
 
         for (Cliente elcliente : clientes) {
-            if (elcliente != null && NIF.equalsIgnoreCase(elcliente.getNif())) {
+            if (elcliente != null && nif.equalsIgnoreCase(elcliente.getNif())) {
                 return elcliente;
             }
 
         }
         return null;
     }
+
+    public static int buscarExistencia(String nif) {
+        int indice = 0;
+        for (Cliente contador : clientes) {
+            if (!(contador.getNif()).equalsIgnoreCase(nif)) {
+                indice++;
+            }
+        }
+        return indice;
+
+    }
+
 }
