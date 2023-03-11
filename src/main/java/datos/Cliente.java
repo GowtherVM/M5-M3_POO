@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.m03mooespinosap;
+package datos;
 
+import condiciones.Condiciones;
+import datos.Placa;
 import java.util.ArrayList;
 
 /**
@@ -46,6 +48,18 @@ public class Cliente {
         return this.m2;
     }
 
+    public int getSizeplacas() {
+        return placas.size();
+    }
+
+    public int getSizeaparells() {
+        return aparatos.size();
+    }
+    
+    public ArrayList getPlacas(){
+        return placas;
+    }
+
     public void onCasa() {
         if (interruptor != true) {
             interruptor = true;
@@ -54,7 +68,6 @@ public class Cliente {
             System.out.println(Condiciones.CASA_ENCESA);
         }
     }
-    
 
     public void onAparell(String descripcion, Condiciones condicion) {
         int indice = 0;
@@ -104,38 +117,23 @@ public class Cliente {
             System.out.println(Condiciones.APARELL_NOREGISTRAT);
         }
     }
+    
+    public double getResta(){
+         double resta;
 
-    public void getList() {
-        double resta;
-        String estado;
 
         resta = this.m2;
         for (Placa laplaca : placas) {
             resta = resta - laplaca.getSuperficie();
         }
-        if (this.interruptor == true) {
-            estado = "encès";
-        } else {
-            estado = "apagat";
-        }
-
-        System.out.println("Cliente: " + this.nif + " - " + this.nom);
-        System.out.println("Superficie de teulada: " + this.m2);
-        System.out.println("Superficie disponible: " + resta);
-        System.out.println("Interruptor general: " + estado);
-
-        if (placas.size() == 0) {
-            System.out.println("No té plaques solars instal·lades.");
-        } else {
-            System.out.println("Plaques solars instal·lades: " + placas.size());
-        }
-        if (aparatos.size() == 0) {
-            System.out.println("No té cap aparell elèctric registrat.");
-        } else {
-            System.out.println("Aparells registrats: " + aparatos.size());
-        }
-
+        
+        return resta;
     }
+    
+    public boolean getInterruptor(){
+        return this.interruptor;
+    }
+
 
     public void getInfo() {
         double potenciatotal = 0;
