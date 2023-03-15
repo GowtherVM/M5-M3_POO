@@ -68,54 +68,38 @@ public class Cliente {
             System.out.println(Condiciones.CASA_ENCESA);
         }
     }
-
-    public void onAparell(String descripcion, Condiciones condicion) {
-        int indice = 0;
-        for (Aparato existencia : aparatos) {
-            if (!(existencia.getDescripcion()).equalsIgnoreCase(descripcion)) {
-                indice++;
-            }
-        }
-
-        if (indice < aparatos.size()) {
-            for (Aparato aparato : aparatos) {
-                if (descripcion.equalsIgnoreCase(aparato.getDescripcion())) {
-                    if (aparato.getInterruptor() == true) {
-
-                        System.out.println(Condiciones.APARELL_ENCES);
-
-                    } else {
-                        aparato.changeOn();
-                        System.out.println("OK: Aparell encès.");
-                    }
-                }
-            }
-        } else {
-            System.out.println(Condiciones.APARELL_NOREGISTRAT);
-        }
+    
+    public void offCasa(){
+        this.interruptor = false;
     }
 
-    public void offAparell(String descripcion, Condiciones condicion) {
-        int indice = 0;
-        for (Aparato existencia : aparatos) {
-            if (!(existencia.getDescripcion()).equalsIgnoreCase(descripcion)) {
-                indice++;
+
+    
+    public Aparato findAparato(String descripcion){
+        for(Aparato aparell: aparatos){
+            if(aparell.getDescripcion().equalsIgnoreCase(descripcion)){
+                return aparell;
             }
         }
-        if (indice < aparatos.size()) {
-            for (Aparato aparato : aparatos) {
-                if (descripcion.equalsIgnoreCase(aparato.getDescripcion())) {
-                    if (aparato.getInterruptor() == false) {
-                        System.out.println(Condiciones.APARELL_APAGAT);
-                    } else {
-                        aparato.changeOff();
-                        System.out.println("OK: Aparell apagat.");
-                    }
-                }
-            }
-        } else {
-            System.out.println(Condiciones.APARELL_NOREGISTRAT);
+        return null;
+    }
+    
+    public double potenciaTotal(){
+        double potenciatotal = 0;
+        for(Placa laplaca: placas){
+            potenciatotal = potenciatotal + laplaca.getPotencia();
         }
+        return potenciatotal;
+    }
+    
+    public double consumTotal(){
+        double consumtotal = 0;
+        for (Aparato aparell:  aparatos){
+            if(aparell.getInterruptor() == true){
+                consumtotal = consumtotal + aparell.getGasto();
+            }
+        }
+        return consumtotal;
     }
     
     public double getResta(){
@@ -132,6 +116,14 @@ public class Cliente {
     
     public boolean getInterruptor(){
         return this.interruptor;
+    }
+    
+    public void offAparells(){
+        for(Aparato elaparell: aparatos){
+            if (elaparell.getInterruptor() == true){
+                elaparell.changeOff();
+            }
+        }
     }
 
 

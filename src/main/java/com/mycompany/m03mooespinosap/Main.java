@@ -43,7 +43,7 @@ public class Main {
                     case "addCasa":
 
                         if (partes.length == 4) {
-                            añadirCasa(partes[1],partes[2],partes[3]);
+                            añadirCasa(partes[1], partes[2], partes[3]);
                         } else {
                             System.out.println(Condiciones.PARAMETRES + Condiciones.ADDCASA);
                         }
@@ -61,22 +61,26 @@ public class Main {
                         break;
 
                     case "addAparell":
-
-                        Aparato nuevo3 = new Aparato(partes[2], Double.parseDouble(partes[3]));
-                        buscado = basededatos.buscarCasa(partes[1]);
-                        buscado.addAparato(nuevo3);
+                        if (partes.length == 4) {
+                            añadirAparato(partes[1], partes[2], partes[3]);
+                        } else {
+                            System.out.println(Condiciones.PARAMETRES + Condiciones.ADDAPARELL);
+                        }
 
                         break;
 
                     case "onCasa":
-                        buscado = basededatos.buscarCasa(partes[1]);
-                        buscado.onCasa();
+                        if(partes.length == 2){
+                            onCasa(partes[1]);
+                        } else{
+                            System.out.println(Condiciones.PARAMETRES + Condiciones.ONCASA);
+                        }
+                        
 
                         break;
                     case "onAparell":
 
-                        buscado = basededatos.buscarCasa(partes[1]);
-                        buscado.onAparell(partes[2], nuevacondicion);
+                        onAparato(partes[1], partes[2]);
 
                         break;
 
@@ -173,6 +177,65 @@ public class Main {
                 }
             } else {
                 System.out.println(Condiciones.SUPERFICIE_PLACA);
+            }
+        } else {
+            System.out.println(Condiciones.CASA_NOREGISTRADA);
+        }
+
+    }
+
+    public static void añadirAparato(String nif, String descripcion, String potencia) {
+        casa = basededatos.buscarCasa(nif);
+        if (casa != null) {
+            if (casa.findAparato(descripcion) != null) {
+                if (Double.parseDouble(potencia) > 0) {
+                    Aparato nuevo3 = new Aparato(descripcion, Double.parseDouble(potencia));
+                    casa.addAparato(nuevo3);
+                } else {
+                    System.out.println(Condiciones.POTENCIA);
+                }
+            } else {
+                System.out.println(Condiciones.APARELL_REGISTRAT);
+            }
+        } else {
+            System.out.println(Condiciones.CASA_NOREGISTRADA);
+        }
+
+    }
+
+    public static void onCasa(String nif) {
+        casa = basededatos.buscarCasa(nif);
+        if (casa != null) {
+            if (casa.getInterruptor() == false) {
+                casa.onCasa();
+            } else {
+                System.out.println(Condiciones.CASA_ENCESA);
+            }
+        } else {
+            System.out.println(Condiciones.CASA_NOREGISTRADA);
+        }
+
+    }
+
+    public static void onAparato(String nif, String aparell) {
+        casa = basededatos.buscarCasa(nif);
+        Aparato aparato;
+        if (casa != null) {
+            aparato = casa.findAparato(aparell);
+            if (aparell != null) {
+                if (casa.getInterruptor() == true) {
+                    aparato.changeOn();
+                    if (casa.consumTotal() > casa.potenciaTotal()) {
+                        casa.offAparells();
+                        casa.offCasa();
+                        System.out.println(Condiciones.PLOMS_SALTATS);
+                    }
+                } else {
+                    System.out.println(Condiciones.INTERRUPTOR_APAGAT);
+                }
+
+            } else {
+                System.out.println(Condiciones.APARELL_NOREGISTRAT);
             }
         } else {
             System.out.println(Condiciones.CASA_NOREGISTRADA);

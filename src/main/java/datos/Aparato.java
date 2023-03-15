@@ -12,7 +12,7 @@ public class Aparato {
 
     private String descripcion;
     private double gasto;
-    private boolean interruptor = true;
+    private boolean interruptor = false;
 
     public Aparato(String descripcion, double gasto) {
         this.descripcion = descripcion;
