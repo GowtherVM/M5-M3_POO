@@ -5,7 +5,6 @@
 package datos;
 
 import condiciones.Condiciones;
-import datos.Placa;
 import java.util.ArrayList;
 
 /**
@@ -48,15 +47,7 @@ public class Cliente {
         return this.m2;
     }
 
-    public int getSizeplacas() {
-        return placas.size();
-    }
-
-    public int getSizeaparells() {
-        return aparatos.size();
-    }
-    
-    public ArrayList getPlacas(){
+    public ArrayList getPlacas() {
         return placas;
     }
 
@@ -68,95 +59,73 @@ public class Cliente {
             System.out.println(Condiciones.CASA_ENCESA);
         }
     }
-    
-    public void offCasa(){
+
+    public void offCasa() {
         this.interruptor = false;
     }
 
-
-    
-    public Aparato findAparato(String descripcion){
-        for(Aparato aparell: aparatos){
-            if(aparell.getDescripcion().equalsIgnoreCase(descripcion)){
-                return aparell;
+    public Aparato findAparato(String descripcion) {
+        if (!aparatos.isEmpty()) {
+            for (Aparato aparell : aparatos) {
+                if (aparell.getDescripcion().equalsIgnoreCase(descripcion)) {
+                    return aparell;
+                }
             }
         }
         return null;
     }
-    
-    public double potenciaTotal(){
+
+    public double potenciaTotal() {
         double potenciatotal = 0;
-        for(Placa laplaca: placas){
+        for (Placa laplaca : placas) {
             potenciatotal = potenciatotal + laplaca.getPotencia();
         }
         return potenciatotal;
     }
-    
-    public double consumTotal(){
+
+    public double consumTotal() {
         double consumtotal = 0;
-        for (Aparato aparell:  aparatos){
-            if(aparell.getInterruptor() == true){
+        for (Aparato aparell : aparatos) {
+            if (aparell.getInterruptor() == true) {
                 consumtotal = consumtotal + aparell.getGasto();
             }
         }
         return consumtotal;
     }
-    
-    public double getResta(){
-         double resta;
 
+    public double getResta() {
+        double resta;
 
         resta = this.m2;
         for (Placa laplaca : placas) {
             resta = resta - laplaca.getSuperficie();
         }
-        
+
         return resta;
     }
-    
-    public boolean getInterruptor(){
+
+    public boolean getInterruptor() {
         return this.interruptor;
     }
-    
-    public void offAparells(){
-        for(Aparato elaparell: aparatos){
-            if (elaparell.getInterruptor() == true){
+
+    public void offAparells() {
+        for (Aparato elaparell : aparatos) {
+            if (elaparell.getInterruptor() == true) {
                 elaparell.changeOff();
             }
         }
     }
 
+    public ArrayList getAparells() {
+        return aparatos;
+    }
 
-    public void getInfo() {
-        double potenciatotal = 0;
+    public double precioTotal() {
         double preciototal = 0;
-        double consum = 0;
-
         for (Placa laplaca : placas) {
-            potenciatotal = potenciatotal + laplaca.getPotencia();
             preciototal = preciototal + laplaca.getPrecio();
         }
-
-        for (Aparato elaparato : aparatos) {
-            if (elaparato.getInterruptor() == true) {
-                consum = consum + elaparato.getGasto();
-            }
-        }
-
-        System.out.println("Cliente: " + this.nif + " - " + this.nom);
-        System.out.println("Plaques solars instal·lades: " + placas.size());
-        System.out.println("Potencia total: " + potenciatotal);
-        System.out.println("Inversió total: " + preciototal);
-        System.out.println("Aparells registrats: " + aparatos.size());
-        System.out.println("Consum actual: " + consum + "\n");
-
-        if (consum > 0) {
-            System.out.println("Aparells encesos:");
-            for (Aparato elaparato : aparatos) {
-                if (elaparato.getInterruptor() == true) {
-                    System.out.println("    - " + elaparato.getDescripcion());
-                }
-            }
-        }
+        return preciototal;
     }
+
 }

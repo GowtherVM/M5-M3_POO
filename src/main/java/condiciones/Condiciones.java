@@ -35,16 +35,16 @@ public class Condiciones {
     public static final String POTENCIA = "ERROR: Potència incorrecte. Ha de ser més gran de 0.";
     
     // errors parametres
-    public static final String PARAMETRES = "ERROR: Número de paràmetres incorrecte d'ús.";
-    public static final String COMANDA = "ERROR: Comanda incorrecta.";
-    public static final String ADDCASA = "Ús: addCasa [nif] [nom] [superficie]";
-    public static final String ADDPLACA = "Ús: addPlaca [nif] [superficie] [preu] [potència]";
+    public static final String PARAMETRES = " ERROR: Número de paràmetres incorrecte d'ús.";
+    public static final String COMANDA = " ERROR: Comanda incorrecta.";
+    public static final String ADDCASA = " Ús: addCasa [nif] [nom] [superficie]";
+    public static final String ADDPLACA = " Ús: addPlaca [nif] [superficie] [preu] [potència]";
     public static final String ADDAPARELL = "Ús: addAparell [nif] [descripció] [potència]";
-    public static final String ONCASA = "Ús: onCasa [nif]";
-    public static final String ONAPARELL = "Ús: onAparell [nif] [descripció aparell]";
-    public static final String OFFAPARELL = "Ús: offAparell [nif] [descripció aparell]";
-    public static final String LIST = "Ús: list";
-    public static final String INFO = "Ús: info [nif]";
-    public static final String QUIT = "Ús: quit";
+    public static final String ONCASA = " Ús: onCasa [nif]";
+    public static final String ONAPARELL = " Ús: onAparell [nif] [descripció aparell]";
+    public static final String OFFAPARELL = " Ús: offAparell [nif] [descripció aparell]";
+    public static final String LIST = " Ús: list";
+    public static final String INFO = " Ús: info [nif]";
+    public static final String QUIT = " Ús: quit";
 }
 
