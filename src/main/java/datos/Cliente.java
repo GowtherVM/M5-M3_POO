@@ -43,7 +43,7 @@ public class Cliente {
         return this.nom;
     }
 
-    public double getMm() {
+    public double getM2() {
         return this.m2;
     }
 
@@ -106,6 +106,15 @@ public class Cliente {
 
     public boolean getInterruptor() {
         return this.interruptor;
+    }
+    
+    public double calcularSuperficie(double nuevaplaca){
+        double superficieplacas = 0;
+        for(Placa laplaca: placas){
+            superficieplacas = superficieplacas + laplaca.getSuperficie();
+        }
+        superficieplacas = superficieplacas + nuevaplaca;
+        return superficieplacas;
     }
 
     public void offAparells() {
