@@ -43,7 +43,7 @@ public class Cliente {
         return this.nom;
     }
 
-    public double getM2() {
+    public double getMm() {
         return this.m2;
     }
 
